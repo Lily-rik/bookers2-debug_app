@@ -20,10 +20,29 @@
           </td>
           <td><%= link_to @book.title, book_path(@book) %></td>
           <td><%= @book.body %></td>
+
+          <td>
+          <% if @book.favorited_by?(current_user) %>
+            <p>
+              <%= link_to book_favorites_path(@book), method: :delete do %>
+              <i class="fas fa-heart text-danger"></i><span class="text-danger"><%= @book.favorites.count %></span>
+              <% end %>
+            </p>
+          <% else %>
+            <p>
+              <%= link_to book_favorites_path(@book), method: :post do %>
+              <i class="far fa-heart"></i><%= @book.favorites.count %>
+              <% end %>
+            </p>
+          <% end %>
+          </td>
+
+
+
+
+
           <% if @book.user_id == current_user.id %>
             <td><%= link_to 'Edit', edit_book_path(@book), class: "btn btn-sm btn-success edit_book_#{@book.id}" %></td>
-          <% end %>
-          <% if @book.user_id == current_user.id %>
             <td><%= link_to 'Destroy', book_path(@book), method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger destroy_book_#{@book.id}"%></td>
           <% end %>
         </tr>
