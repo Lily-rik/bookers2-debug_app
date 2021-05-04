@@ -8,11 +8,25 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
+
   <body>
     <%= render 'layouts/header' %>
+
+    <!--検索機能の表示-->
+    <% if user_signed_in? %>
+    <div class="text-center">
+      <%= form_with url:search_path, method: :get, local:true do |f| %>
+        <%= f.text_field :word %>
+        <%= f.select :range, options_for_select([['User'], ['Book']]) %>
+        <%= f.select :search, options_for_select([["完全一致","perfect_match"],["部分一致","partical_match"]]) %>
+        <%= f.submit "検索" %>
+      <% end %>
+    </div>
+    <% end %>
+
       <main>
         <p id="notice"><%= notice %></p>
-        
+
         <%= yield %>
       </main>
     <%= render 'layouts/footer' %>
