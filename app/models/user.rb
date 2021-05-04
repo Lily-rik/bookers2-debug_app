@@ -22,6 +22,10 @@ class User < ApplicationRecord
   def self.looks(searchs, words)
     if searchs == "perfect_match"
       @user = User.where("name LIKE ?", "#{words}")
+    elsif
+      @user = User.where("name LIKE ?", "%#{words}")
+    elsif
+      @user = User.where("name LIKE ?", "#{words}%")
     else
       @user = User.where(" LIKE ?", "%#{words}%")
     end
